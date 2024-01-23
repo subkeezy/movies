@@ -1,2 +1,4 @@
-build 
+# Ignore artifacts:
 node_modules
+build
+coverage

@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.13.1",
     "date-fns": "^3.3.0",
+    "listr2": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -21,7 +22,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src/*.js",
     "lint:fix": "eslint ./src/*.js --fix --color",
-    "format": "prettier --write ./src/**"
+    "format": "prettier --write ./src/**",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -51,8 +53,8 @@
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^15.2.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^11.1.4",
     "prettier": "^3.2.2"
   },
   "husky": {
@@ -62,6 +64,7 @@
   },
   "lint-staged": {
     "*.{js, jsx}": [
+      "npm run lint:fix",
       "npm run format",
       "git add"
     ]
