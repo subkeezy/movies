@@ -10,7 +10,7 @@ export default class MovieList extends Component {
   movieService = new MovieService();
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       error: null,
       isLoaded: false,
@@ -19,69 +19,63 @@ export default class MovieList extends Component {
   }
 
   componentDidMount() {
-    this.movieService
-      .getMovieByWord('anime')
-      .then((movie) => {
+    this.movieService.getMovieByWord('anime').then(
+      (movie) => {
         this.setState({
           isLoaded: true,
-          items: movie
-        })
+          items: movie,
+        });
       },
       (error) => {
         this.setState({
           isLoaded: true,
-          error
-        })
+          error,
+        });
       }
-    )
+    );
   }
 
   render() {
     const { error, isLoaded, items } = this.state;
-    console.log(items)
+    console.log(items);
 
-    const elements = items.map(el => {
-      const { id, ...elProps} = el;
-        return (
-          <MovieItem
-            key={id}
-            {...elProps}
-          />
-        )
-    })
+    const elements = items.map((el) => {
+      const { id, ...elProps } = el;
+      return <MovieItem key={id} {...elProps} />;
+    });
 
     if (error) {
-      return <div>Ошибка: {error.message}</div>
+      return <div>Ошибка: {error.message}</div>;
     } else if (!isLoaded) {
       return (
-      <div
-        style={{
-          marginLeft: '45%',
-          marginTop: '20%',
-          fontSize: 20,
-          display: 'flex',
-          columnGap: 15,
-        }}
-      >
+        <div
+          style={{
+            marginLeft: '45%',
+            marginTop: '20%',
+            fontSize: 20,
+            display: 'flex',
+            columnGap: 15,
+          }}
+        >
           Загрузка <LoadingOutlined />
-      </div>)
+        </div>
+      );
     } else {
       return (
         <div className="movie__list">
-        <Row
-          gutter={[36, 36]}
-          justify="space-between"
-          style={{
-            boxSizing: 'border-box',
-            margin: 0,
-            padding: '21px 36px',
-          }}
-        >
-          {elements}
-        </Row>
-      </div>
-      )
+          <Row
+            gutter={[36, 36]}
+            justify="space-between"
+            style={{
+              boxSizing: 'border-box',
+              margin: 0,
+              padding: '21px 36px',
+            }}
+          >
+            {elements}
+          </Row>
+        </div>
+      );
     }
-
   }
 }

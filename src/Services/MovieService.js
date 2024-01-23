@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
 export default class MovieService {
   _baseUrl = 'https://api.themoviedb.org/3';
@@ -14,17 +14,17 @@ export default class MovieService {
 
   async getPopularMovies() {
     const res = await this.getResource(`/movie/popular?`);
-    return res.results.map(el => this.movieData(el))
+    return res.results.map((el) => this.movieData(el));
   }
 
   async getMovieByWord(word) {
     const res = await this.getResource(`/search/movie?query=${word}&`);
-    const filtered = await res.results.filter(el => el.poster_path !== null)
-    return filtered.map(el => this.movieData(el))
+    const filtered = await res.results.filter((el) => el.poster_path !== null);
+    return filtered.map((el) => this.movieData(el));
   }
 
   dateFormat(date) {
-    return format(new Date(date), 'MMMM dd, yyyy')
+    return format(new Date(date), 'MMMM dd, yyyy');
   }
 
   movieData(movie) {
@@ -36,9 +36,8 @@ export default class MovieService {
       genre: ['Action', 'Drama'],
       description: movie.overview,
       poster: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
-    }
+    };
   }
-
 }
 
 // const movies = new MovieService();
