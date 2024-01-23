@@ -1,0 +1,12 @@
+.movie__list {
+  box-sizing: border-box;
+  height: 100vh;
+  background-color: #fff;
+  width: 1010px;
+  overflow: auto;
+  margin: 0 auto;
+}
+
+.movie__list::-webkit-scrollbar {
+  width: 0;
+}

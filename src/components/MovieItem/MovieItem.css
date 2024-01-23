@@ -1,0 +1,71 @@
+.movie__card {
+  display: flex;
+  flex-direction: row;
+
+  height: 281px;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 7px;
+  padding: 15px 20px;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  line-height: 22px;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 20px;
+  line-height: 28px;
+  width: 85%;
+}
+
+.date {
+  font-size: 12px;
+  line-height: 22px;
+  color: #827e7e;
+}
+
+.genre-list {
+  display: flex;
+  column-gap: 8px;
+  list-style: none;
+  padding: 0;
+}
+
+.genre-item {
+  display: inline-flex;
+  padding: 2px 5px;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+}
+
+.rating {
+  display: block;
+  position: absolute;
+  right: 9px;
+  top: 9px;
+  padding: 6px 8px;
+  border: 2px solid #e9d100;
+  border-radius: 50%;
+}
+
+.description {
+  display: inline-block;
+  height: 100%;
+  width: 228px;
+  overflow: hidden;
+}
+
+.poster {
+  display: block;
+  width: 183px;
+  min-height: 281px;
+  height: 100%;
+}
+
+.card-content * {
+  margin: 0;
+}
