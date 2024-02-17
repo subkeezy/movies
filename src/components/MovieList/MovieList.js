@@ -1,81 +1,75 @@
 import { Component } from 'react';
 import './MovieList.css';
-import { Row } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import { Alert, Row } from 'antd';
 
+import SearchError from '../SearchError/SearchError';
 import MovieItem from '../MovieItem/MovieItem';
-import MovieService from '../../Services/MovieService';
+import MoviePagination from '../MoviePagination/MoviePagination';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 export default class MovieList extends Component {
-  movieService = new MovieService();
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      items: [],
-    };
-  }
-
-  componentDidMount() {
-    this.movieService.getMovieByWord('anime').then(
-      (movie) => {
-        this.setState({
-          isLoaded: true,
-          items: movie,
-        });
-      },
-      (error) => {
-        this.setState({
-          isLoaded: true,
-          error,
-        });
-      }
-    );
-  }
-
   render() {
-    const { error, isLoaded, items } = this.state;
-    console.log(items);
-
+    const { error, isLoaded, items, searchError, popularMovies, currentPage, ratedTab } = this.props.state;
+    const { onPageChange, totalPages, onRatingChange, getRatedMovies, onUserRatingChange } = this.props;
     const elements = items.map((el) => {
-      const { id, ...elProps } = el;
-      return <MovieItem key={id} {...elProps} />;
+      return <MovieItem key={el.id} {...el} onRatingChange={onRatingChange} onUserRatingChange={onUserRatingChange} />;
     });
+    const pagination =
+      !isLoaded && !error && !searchError ? (
+        <LoadingSpinner />
+      ) : items.length !== 0 && !error && !searchError && isLoaded ? (
+        <MoviePagination
+          state={this.props.state}
+          onPageChange={onPageChange}
+          totalPages={totalPages}
+          currentPage={currentPage}
+        />
+      ) : !isLoaded && ratedTab && items.length === 0 && !error && !searchError ? (
+        <LoadingSpinner />
+      ) : ratedTab && items.length === 0 && !error && !searchError ? (
+        <div className="no-movies">No rated movies yet</div>
+      ) : null;
 
-    if (error) {
-      return <div>Ошибка: {error.message}</div>;
-    } else if (!isLoaded) {
-      return (
-        <div
+    const popularMoviesTitle =
+      popularMovies && !error && !getRatedMovies && isLoaded ? (
+        <h1 className="popular-movies-title">Popular movies</h1>
+      ) : null;
+
+    const networkError = error ? (
+      <Alert
+        message="Запрос данных отклонен. Попробуйте позже."
+        type="error"
+        showIcon
+        className="network-error"
+        style={{
+          margin: 'auto',
+          textAlign: 'center',
+          fontSize: 20,
+          marginTop: 20,
+        }}
+      />
+    ) : null;
+
+    const onSearchError = searchError ? <SearchError /> : null;
+
+    return (
+      <div className="movie__list">
+        {popularMoviesTitle}
+        {onSearchError}
+        {networkError}
+        <Row
+          className="list_grid"
+          gutter={[36, 23]}
           style={{
-            marginLeft: '45%',
-            marginTop: '20%',
-            fontSize: 20,
-            display: 'flex',
-            columnGap: 15,
+            boxSizing: 'border-box',
+            margin: 0,
+            paddingTop: 21,
           }}
         >
-          Загрузка <LoadingOutlined />
-        </div>
-      );
-    } else {
-      return (
-        <div className="movie__list">
-          <Row
-            gutter={[36, 36]}
-            justify="space-between"
-            style={{
-              boxSizing: 'border-box',
-              margin: 0,
-              padding: '21px 36px',
-            }}
-          >
-            {elements}
-          </Row>
-        </div>
-      );
-    }
+          {elements}
+        </Row>
+        {pagination}
+      </div>
+    );
   }
 }

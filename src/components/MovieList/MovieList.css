@@ -1,12 +1,28 @@
 .movie__list {
-  box-sizing: border-box;
-  height: 100vh;
-  background-color: #fff;
-  width: 1010px;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.list_grid {
+  display: grid;
+  column-gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-flow: dense;
+  font-size: 20px;
+}
+
+.no-movies {
+  font-size: 20px;
   margin: 0 auto;
 }
 
-.movie__list::-webkit-scrollbar {
-  width: 0;
+.popular-movies-title {
+  margin: 0;
+  padding-top: 20px;
+}
+
+@media (max-width: 1010px) {
+  .list_grid {
+    grid-template-columns: 1fr;
+  }
 }

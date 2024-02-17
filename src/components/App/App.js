@@ -1,11 +1,11 @@
-import MovieList from '../MovieList/MovieList';
+import MovieTabs from '../MovieTabs/MovieTabs';
 
 import './App.css';
 
 const App = () => {
   return (
-    <div className="movie">
-      <MovieList />
+    <div className="movies">
+      <MovieTabs />
     </div>
   );
 };
